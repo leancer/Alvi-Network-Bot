@@ -1,7 +1,7 @@
 const bot = require("../init");
 const searchApi = require('../utils/search');
 
-bot.onText(/\/search (.*)/, async (msg, match) => {
+bot.onText(/^\/search (.*)/, async (msg, match) => {
     
     const chatId = msg.chat.id;
     const searchString = match[1];
@@ -21,10 +21,15 @@ bot.onText(/\/search (.*)/, async (msg, match) => {
         bot.sendMessage(chatId,replMsg,{parse_mode : "HTML"});
 
     }else{
+
         bot.sendMessage(chatId, `Hey @${msg.from.username}, there are no result for ${searchString}`);
+
     }
-
-    
-
 });
+
+bot.onText(/^\/search$/,(msg,match) => {
+    const chatId = msg.chat.id;
+
+    bot.sendMessage(chatId, `Hey @${msg.from.username}, Please Enter What you Want to Search eg. /search <Query>`);
+})
 
